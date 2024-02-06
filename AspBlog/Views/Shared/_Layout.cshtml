@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="MiHa" />
+    <title>@ViewData["Title"]</title>
+    <link rel="shortcut icon" href="~/images/ikona.ico" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/lightbox2/css/lightbox.min.css" asp-append-version="true" />
+    @await RenderSectionAsync("CSS", required: false)
+</head>
+<body>
+    <header>
+        <div id="logo"><h1>Michal<span>Hartl</span></h1><small>Full stack SW developer</small></div>
+        <nav>
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Domů</a></li>
+                <li><a asp-controller="Articles" asp-action="Index">Články</a></li>
+                <li><a asp-controller="Home" asp-action="Skills">Dovednosti</a></li>
+                <li><a asp-controller="Home" asp-action="References">Reference</a></li>
+                @if (User.Identity?.IsAuthenticated == true)@*jestliže je uživatel přihlášen*@
+                {
+                    @if (User.IsInRole(UserRoles.Admin))@*admin*@
+                    {<li><a href="/Account/Logout">Admin/Odhlásit</a></li>}
+                    else  @*user*@
+                    {<li><a href="/Account/Logout">User/Odhlásit</a></li>}
+                }
+                else
+                {<li><a href="/Account/Login">Přihlásit/Registrovat</a></li>}
+                @*<li><a asp-controller="Ac­count" asp-action="Login2">Přih­lásit</a></li>*@
+                @*<li><a asp-controller="Ac­count" asp-action="Regis­ter">Registro­vat</a></li>*@
+                <li><a class="kontakt-tlacitko" asp-controller="Home" asp-action="Contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article>
+        <header>
+            <h1>@ViewData["Title"]</h1>
+        </header>
+        
+        <section>
+            @RenderBody()
+        </section>
+        
+    </article>
+    <footer>
+        Vytvořil &copy;MiHa @DateTime.Now.Year
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/lightbox2/js/lightbox-plus-jquery.min.js" asp-append-version="true"></script>
+    @*"Lightbox"=>pomocný web.doplněk pro zvětš.náhledů obrázků v "References.cshtml"*@
+    <script src="~/lib/lightbox2/js/lightbox.min.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

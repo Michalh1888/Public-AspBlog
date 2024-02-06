@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AspBlog.Models.Article>
+
+@{
+    ViewData["Title"] = "Seznam článků";
+}
+@*zpřístupnění některých tlačítek pouze Adminovi pomocí met.:"IsInRole()"*@
+@if (User.IsInRole(UserRoles.Admin))
+{
+    <p>
+        <a class="clanky-tlacitko" asp-action="Create">Vytvořit nový</a>
+    </p>
+}
+<ul class="list-group" id="clanky">
+    @foreach (var item in Model)
+    {   
+        <li class="list-group-item">
+            <h2><a asp-action="Details" asp-route-id="@item.Id" class="clanek-odkaz">@item.Title</a></h2>
+            <p>@item.Description</p>
+            @if (User.IsInRole(UserRoles.Admin))
+            {
+                <p> 
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editovat</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Odstranit</a>
+                </p>
+            }
+        </li>
+    }
+</ul>

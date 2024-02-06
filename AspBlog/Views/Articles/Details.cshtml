@@ -1,0 +1,12 @@
+﻿@model AspBlog.Models.Article
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<p>
+@Html.Raw(Model.Content)
+</p>
+<p>
+<a class="clanky-tlacitko" asp-action="Index">Zpět na seznam</a>
+</p>
